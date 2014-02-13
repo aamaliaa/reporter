@@ -1,0 +1,19 @@
+{
+  "name": "reporter",
+  "version": "0.0.1",
+  "description": "API for querying Reporter data from Dropbox",
+  "keywords": [
+    "reporter",
+    "reporter-app",
+    "dropbox",
+    "feltron"
+  ],
+  "dependencies": {
+    "dropbox": "0.10.2",
+    "express": "~3.4.8",
+    "q": "~1.0.0",
+    "underscore": "~1.6.0"
+  },
+  "main": "index.js",
+  "license": "MIT"
+}
