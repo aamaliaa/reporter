@@ -20,10 +20,12 @@ app.use(app.router);
 
 app.get('/', function(req, res) {
 	reporter.authenticate(function(error, client) {
-		if(error) {
+		if (error) {
 			console.log(error);
 		} else {
-			res.json({ token: client._oauth._token }); // @TODO store this somewhere
+			res.json({
+				token: client._oauth._token
+			}); // @TODO store this somewhere
 		}
 	});
 });
@@ -34,11 +36,17 @@ app.get('/list', function(req, res) {
 	});
 });
 
-app.get('/date/:date', function(req, res) {
+app.get('/data/:date?', function(req, res) {
 	var date = req.param('date');
-	reporter.getDate(date, function(error, data) {
-		res.json(data);
-	});
+	if (date) {
+		reporter.getDate(date, function(error, data) {
+			res.json(data);
+		});
+	} else {
+		reporter.getAll(function(error, data) {
+			res.json(data);
+		});
+	}
 });
 
 http.createServer(app).listen(app.get('port'), function() {

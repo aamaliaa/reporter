@@ -11,7 +11,6 @@
   "dependencies": {
     "dropbox": "0.10.2",
     "express": "~3.4.8",
-    "q": "~1.0.0",
     "underscore": "~1.6.0"
   },
   "main": "index.js",
