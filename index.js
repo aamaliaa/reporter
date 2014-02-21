@@ -1,7 +1,8 @@
 var express = require('express'),
 	http = require('http'),
 	path = require('path'),
-	Q = require('q');
+	Q = require('q'),
+	_ = require('underscore');
 
 var config = require('./config');
 
@@ -51,6 +52,25 @@ app.get('/data/:date?', function(req, res) {
 			res.json(data);
 		});
 	}
+});
+
+app.get('/tokens', function(req, res) {
+	var prompt = req.param('questionPrompt') || 'What are you wearing?';
+	return reporter.getAll()
+	.then(function(data) {
+		return _.compact(_.map(data, function(d) {
+				var obj = _.findWhere(d.responses, { questionPrompt: prompt });
+				return obj ? obj['tokens'] : null;
+			}));
+	})
+	.then(function(data) {
+		return _.uniq(_.reduce(data, function(a, b) {
+			return a.concat(b);
+		}));
+	})
+	.then(function(data) {
+		res.json(data);
+	});
 });
 
 app.get('/user', function(req, res) {
