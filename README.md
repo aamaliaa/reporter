@@ -1,7 +1,9 @@
 Reporter-App Client Library
 ============================
 
-This is a Javascript client library for [Reporter App](http://www.reporter-app.com) data from Dropbox with Node.js. It's also still very much *in progress*.
+This is a Javascript client library for [Reporter App](http://www.reporter-app.com) data from Dropbox with Node.js. It uses the awesome q async library (https://github.com/kriskowal/q).
+
+It's also still very much **in progress**.
 
 #### Set up
 1. Create an app in the developers section of Dropbox with access to only your text files.

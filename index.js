@@ -1,6 +1,7 @@
 var express = require('express'),
 	http = require('http'),
-	path = require('path');
+	path = require('path'),
+	Q = require('q');
 
 var config = require('./config');
 
@@ -25,28 +26,37 @@ app.get('/', function(req, res) {
 		} else {
 			res.json({
 				token: client._oauth._token
-			}); // @TODO store this somewhere
+			});
 		}
 	});
 });
 
 app.get('/list', function(req, res) {
-	reporter.listDates(function(error, stat) {
-		res.json(stat);
+	return reporter.listDates()
+	.then(function(dates) {
+		res.json(dates);
 	});
 });
 
 app.get('/data/:date?', function(req, res) {
 	var date = req.param('date');
 	if (date) {
-		reporter.getDate(date, function(error, data) {
+		return reporter.getDate(date)
+		.then(function(data) {
 			res.json(data);
 		});
 	} else {
-		reporter.getAll(function(error, data) {
+		return reporter.getAll()
+		.then(function(data) {
 			res.json(data);
 		});
 	}
+});
+
+app.get('/user', function(req, res) {
+	reporter.getUser(function(err, data) {
+		res.json(data);
+	});
 });
 
 http.createServer(app).listen(app.get('port'), function() {
