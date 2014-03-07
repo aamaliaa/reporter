@@ -73,6 +73,25 @@ app.get('/tokens', function(req, res) {
 	});
 });
 
+app.get('/questions', function(req, res) {
+	return reporter.getAll()
+	.then(function(data) {
+			return _.map(data, function(d) {
+				return _.map(d.responses, function(r) {
+					return r.questionPrompt;
+				});
+			});
+	})
+	.then(function(data) {
+		return _.uniq(_.reduce(data, function(a, b) {
+			return a.concat(b);
+		}));
+	})
+	.then(function(data) {
+		res.json(data);
+	});
+});
+
 app.get('/user', function(req, res) {
 	reporter.getUser(function(err, data) {
 		res.json(data);
