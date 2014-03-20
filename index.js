@@ -54,24 +54,9 @@ app.get('/reports/:date?', function(req, res) {
 	}
 });
 
-app.get('/tokens', function(req, res) {
+app.get('/answers', function(req, res) {
 	var prompt = req.param('questionPrompt') || 'What are you wearing?';
-	return reporter.getAll()
-	.then(function(data) {
-		return _.compact(_.map(data, function(d) {
-				var obj = _.findWhere(d.responses, { questionPrompt: prompt });
-				if(obj) {
-					return obj;
-				} else {
-					throw new Error('Question does not return tokens.');
-				}
-			}));
-	})
-	.then(function(data) {
-		return _.uniq(_.reduce(data, function(a, b) {
-			return a.concat(b);
-		}));
-	})
+	reporter.getAnswers(prompt)
 	.then(function(data) {
 		res.json(data);
 	})
