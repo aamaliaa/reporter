@@ -16,8 +16,14 @@ It's also still very much **in progress**.
 
 #### TO DO
 * ~~implement caching (dropbox read file and read directory calls cached for 15 mins)~~
-* incorporate json querying (maybe [json-query](https://www.npmjs.org/package/json-query) or [jsonquery](https://www.npmjs.org/package/jsonquery))
+* expose specific data
+	* get all answers to a specific question on a date/range of dates
+	* get specific sensor data on a date/range of dates
 * turn into Node module (via npm)
+
+### Links
+* [Reporter App](http://www.reporter-app.com)
+* [Reporter Save File Schema](https://gist.github.com/dbreunig/9315705)
 
 MIT License
 ===============
