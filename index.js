@@ -32,14 +32,14 @@ app.get('/', function(req, res) {
 	});
 });
 
-app.get('/list', function(req, res) {
+app.get('/dates', function(req, res) {
 	return reporter.listDates()
 	.then(function(dates) {
 		res.json(dates);
 	});
 });
 
-app.get('/data/:date?', function(req, res) {
+app.get('/reports/:date?', function(req, res) {
 	var date = req.param('date');
 	if (date) {
 		return reporter.getDate(date)
@@ -60,7 +60,11 @@ app.get('/tokens', function(req, res) {
 	.then(function(data) {
 		return _.compact(_.map(data, function(d) {
 				var obj = _.findWhere(d.responses, { questionPrompt: prompt });
-				return obj ? obj['tokens'] : null;
+				if(obj) {
+					return obj;
+				} else {
+					throw new Error('Question does not return tokens.');
+				}
 			}));
 	})
 	.then(function(data) {
@@ -70,6 +74,12 @@ app.get('/tokens', function(req, res) {
 	})
 	.then(function(data) {
 		res.json(data);
+	})
+	.fail(function(error) {
+		console.log(error);
+		res.json({
+			error: error.message
+		});
 	});
 });
 
