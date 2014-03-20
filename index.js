@@ -76,7 +76,6 @@ app.get('/tokens', function(req, res) {
 		res.json(data);
 	})
 	.fail(function(error) {
-		console.log(error);
 		res.json({
 			error: error.message
 		});
